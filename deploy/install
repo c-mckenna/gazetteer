@@ -11,7 +11,8 @@ SOLR_HOME=$HOME/$SOLR
 PROVISION_PROG=wfsFileToSolr
 
 SOLR_ARCHIVE=$SOLR_HOME.zip
-INSTALL_SERVICE_COMMAND=$HOME/$DIRECTORY/deploy/install_solr.sh $SOLR_ARCHIVE -u ec2-user -i /home/ec2-user/
+COMMAND=$HOME/$DIRECTORY/deploy/install_solr.sh
+INSTALL_SERVICE_COMMAND=$COMMAND $SOLR_ARCHIVE -u ec2-user -i /home/ec2-user/
 
 
 # Download
@@ -55,7 +56,8 @@ fi
 # Set up service and get it running
 if [ ! -f /etc/init.d/solr ]; then
   echo "Adding the Solr service to init scripts"
-  sudo sh $INSTALL_SERVICE_COMMAND
+  chmod +x $COMMAND
+  sudo $INSTALL_SERVICE_COMMAND
 fi
 
 sudo chkconfig --level 345 solr on
