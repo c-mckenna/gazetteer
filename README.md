@@ -13,7 +13,8 @@ All up, you should only really need take a copy of the file /deploy/install, mak
 
 There are scripts in the source directory.
 
-To install bootstrap by just copying and pasting this code into a file as the ec2-user in the /home/ec2-user, set it executable and run it. After a couple of minutes you should have a running Solr Australian Gazetteer instance running that can be queried.
+To bootstrap copy and paste this code into a file and as the ec2-user in the /home/ec2-user, set it executable and run it.
+After a couple of minutes you should have a running Solr Australian Gazetteer instance running that can be queried.
 ```bash
 #!/bin/bash
 
@@ -31,9 +32,10 @@ fi
 cd $HOME/$DIRECTORY/deploy
 chmod +x install
 ./install
-
 ```
-It sets up proxying against an apache http server that was one of the requirements and the data is then available on http://<your_host_name>/select?indent=on&q=*:*&wt=json
+It sets up proxying on an apache http server that was one of the requirements and the data is then available on http://<your_host_name>/select?indent=on&q=*:*&wt=json
+A service is installed and set to autostart on reboot.
+
 
 Naturally it would be expected that a client would consume the data.
 
