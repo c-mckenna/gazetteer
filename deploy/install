@@ -55,7 +55,7 @@ fi
 # Set up service and get it running
 if [ ! -f /etc/init.d/solr ]; then
   echo "Adding the Solr service to init scripts"
-  sudo $INSTALL_SERVICE_COMMAND
+  sudo sh $INSTALL_SERVICE_COMMAND
 fi
 
 sudo chkconfig --level 345 solr on
