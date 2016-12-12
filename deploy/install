@@ -6,6 +6,7 @@ SOLR_VER=6.3.0
 SOLR=solr-$SOLR_VER
 SOLR_ZIP=$SOLR.zip
 SOLR_HOME=$HOME/$SOLR
+SOLR_DATA=/home/ec2-user/solr-data
 #PROVISION_PROG=wfsToSolr
 # While testing use a file until we are sure it works and then do it direct off the service
 PROVISION_PROG=wfsFileToSolr
@@ -70,6 +71,7 @@ if [ ! -d $SOLR_HOME/server/solr/placenames ]; then
   echo "Copying placenames config to Solr server"
   # Start loading data
   # cp -rf deploy/placenames $SOLR_HOME/server/solr
+  cd $SOLR_HOME
   bin/solr create -c placenames -d /home/ec2-user/gazetteer/deploy/placenames/conf
   cd $HOME/$DIRECTORY/source
   node $PROVISION_PROG
