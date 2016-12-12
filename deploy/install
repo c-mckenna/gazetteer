@@ -19,7 +19,7 @@ if [ ! -d $SOLR ]; then
       /usr/bin/wget http://mirror.intergrid.com.au/apache/lucene/solr/$SOLR_VER/$SOLR.zip
    fi
    echo "Unzipping SOLR"
-   usr/bin/unzip $SOLR.zip
+   /usr/bin/unzip $SOLR.zip
 fi
 
 # Set up data
@@ -32,7 +32,7 @@ if [ ! -d $DIRECTORY ]; then
 else
   echo "Updating gazetteer from git and doing an NPM update..."
   cd $DIRECTORY
-  git update
+  git pull
   npm update
 fi
 
