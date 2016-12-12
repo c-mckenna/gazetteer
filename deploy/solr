@@ -1,12 +1,17 @@
 #!/bin/sh
 #
+# solr          Start/Stop the solr server.
+#
 # chkconfig: 2345 90 60
+# description: Description of the Service
 #
 # This script will launch Solr in a mode that will automatically respawn if it
 # crashes. Output will be sent to /var/log/solr/solr.log. A PID file will be
 # created in the standard location.
+
 PROG="solr"
 PIDFILE=/var/run/$PROG.pid
+
 . /etc/init.d/functions
 
 start () {
