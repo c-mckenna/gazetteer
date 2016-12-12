@@ -1,49 +1,73 @@
 #!/bin/bash
-export DIRECTORY=gazetteer
-export SOLR_VER=6.3.0
-export SOLR=solr-$SOLR_VER
-export SOLR_ZIP=$SOLR.zip
-export SOLR_HOME=$HOME/$SOLR
-# cd /home/ec2-user
+
+DIRECTORY=gazetteer
+SOLR_VER=6.3.0
+SOLR=solr-$SOLR_VER
+SOLR_ZIP=$SOLR.zip
+SOLR_HOME=$HOME/$SOLR
+#PROVISION_PROG=wfsToSolr
+# While testing use a file until we are sure it works and then do it direct off the service
+PROVISION_PROG=wfsFileToSolr
 
 # Download
 cd $HOME
 
 if [ ! -d $SOLR ]; then
+   echo "No SOLR installed"
    if [ ! -f $SOLR_ZIP ]; then
+      echo "Fetching SOLR zip..."
       /usr/bin/wget http://mirror.intergrid.com.au/apache/lucene/solr/$SOLR_VER/$SOLR.zip
    fi
+   echo "Unzipping SOLR"
    usr/bin/unzip $SOLR.zip
 fi
 
 # Set up data
 if [ ! -d $DIRECTORY ]; then
+  echo "Fetching gazetteer project"
   git clone https://github.com/Tomella/$DIRECTORY.git
   cd $DIRECTORY
+  echo "NPM install"
   npm install
 else
+  echo "Updating gazetteer from git and doing an NPM update..."
   cd $DIRECTORY
   git update
   npm update
 fi
 
-# Do everything relative to the directory from now on
-cp -rf deploy/placenames $SOLR_HOME/server/solr
+# Set up proxying for select if there is an Apache config
+if [ -d /etc/httpd/conf.d ] then
+  if [ ! -f /etc/httpd/conf.d/gazetteer.conf ]; then
+    echo "Setting up Apache proxy"
+    sudo cp $DIRECTORY/deploy/gazetteer.conf /etc/httpd/conf.d
+    sudo service httpd restart
+  fi
+else
+  echo "No Apache installed so bypassing proxying"
+fi
 
 # Set up service and get it running
-sudo cp deploy/solr /etc/init.d
-sudo chmod +x /etc/init.d/solr
+if [ ! -f /etc/init.d/solr ]; then
+  echo "Adding the Solr service to init scripts"
+  sudo cp deploy/solr /etc/init.d
+  sudo chmod +x /etc/init.d/solr
+  sudo service solr start
+fi
+
 sudo chkconfig --level 345 solr on
-sudo service solr start
 
-# Set up proxying for select
-sudo cp $DIRECTORY/deploy/gazetteer.conf /etc/httpd/conf.d
-sudo service httpd restart
 
-# Start loading data
-cd source
-node wfsToSolr
+# Do we need rebuild the data?
+if [ ! -d $SOLR_HOME/server/solr/placenames ]; then
+  echo "Copying placenames config to Solr server"
+  # Start loading data
+  cp -rf deploy/placenames $SOLR_HOME/server/solr
+  cd $HOME/$DIRECTORY/source
+  node $PROVISION_PROG
+  # Not sure if it will pick it up dynamically so try a restart to begin with.
+  sudo service solr restart
+fi
 
-cd $HOME
 
 echo 'Installation complete'

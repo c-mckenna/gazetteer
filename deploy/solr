@@ -8,12 +8,15 @@
 # This script will launch Solr in a mode that will automatically respawn if it
 # crashes. Output will be sent to /var/log/solr/solr.log. A PID file will be
 # created in the standard location.
+PROG="solr"
+PIDFILE=/var/run/$PROG.pid
+
 
 start () {
     echo -n "Starting solr..."
 
     # Start daemon
-    daemon --chdir='/home/ec2-user/solr-6.3.0' --command "bin/solr start" --respawn --output=/var/log/solr/solr.log --name=solr --verbose
+    daemon --chdir='/home/ec2-user/solr-6.3.0' --command "bin/solr start" --respawn --output=/var/log/$PROG/$PROG.log --name=$PROG --verbose
 
     RETVAL=$?
     if [ $RETVAL = 0 ]
@@ -29,7 +32,7 @@ stop () {
     # Stop daemon
     echo -n "Stopping solr..."
 
-    daemon --stop --name=solr  --verbose
+    daemon --stop --name=$PROG  --verbose
     RETVAL=$?
 
     if [ $RETVAL = 0 ]
@@ -43,13 +46,13 @@ stop () {
 
 
 restart () {
-    daemon --restart --name=solr  --verbose
+    daemon --restart --name=$PROG  --verbose
 }
 
 
 status () {
     # Report on the status of the daemon
-    daemon --running --verbose --name=solr
+    daemon --running --verbose --name=$PROG
     return $?
 }
 
@@ -65,7 +68,8 @@ case "$1" in
         stop
     ;;
     restart)
-        restart
+        stop
+        start
     ;;
     *)
         echo $"Usage: solr {start|status|stop|restart}"
