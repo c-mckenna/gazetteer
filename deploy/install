@@ -40,7 +40,7 @@ fi
 if [ -d /etc/httpd/conf.d ]; then
   if [ ! -f /etc/httpd/conf.d/gazetteer.conf ]; then
     echo "Setting up Apache proxy"
-    sudo cp $DIRECTORY/deploy/gazetteer.conf /etc/httpd/conf.d
+    sudo cp $HOME/$DIRECTORY/deploy/gazetteer.conf /etc/httpd/conf.d
     sudo service httpd restart
   fi
 else
