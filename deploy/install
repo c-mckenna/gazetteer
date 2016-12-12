@@ -64,7 +64,7 @@ if [ ! -f /etc/init.d/solr ]; then
 fi
 
 sudo chkconfig --level 345 solr on
-
+sudo service solr restart
 
 # Do we need rebuild the data?
 if [ ! -d $SOLR_HOME/server/solr/placenames ]; then
