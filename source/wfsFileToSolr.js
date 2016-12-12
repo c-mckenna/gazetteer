@@ -1,3 +1,4 @@
+'use strict'
 // stream usage
 // takes the same options as the parser
 
