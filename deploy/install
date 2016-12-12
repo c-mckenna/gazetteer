@@ -12,7 +12,7 @@ PROVISION_PROG=wfsFileToSolr
 
 SOLR_ARCHIVE=$SOLR_HOME.zip
 COMMAND=$DIRECTORY/deploy/install_solr.sh
-INSTALL_SERVICE_COMMAND=gazetteer/deploy/install_solr.sh solr-6.3.0.zip -u ec2-user -i /home/ec2-user/
+INSTALL_SERVICE_COMMAND="gazetteer/deploy/install_solr.sh solr-6.3.0.zip -u ec2-user -i /home/ec2-user/"
 
 
 # Download
