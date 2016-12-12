@@ -23,8 +23,8 @@ if [ ! -d $SOLR ]; then
       echo "Fetching SOLR zip..."
       /usr/bin/wget http://mirror.intergrid.com.au/apache/lucene/solr/$SOLR_VER/$SOLR.zip
    fi
-   # echo "Unzipping SOLR"
-   # /usr/bin/unzip $SOLR.zip
+   echo "Unzipping SOLR"
+   /usr/bin/unzip $SOLR.zip
 fi
 
 # Set up data
