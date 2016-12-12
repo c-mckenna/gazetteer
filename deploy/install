@@ -7,9 +7,9 @@ SOLR=solr-$SOLR_VER
 SOLR_ZIP=$SOLR.zip
 SOLR_HOME=$HOME/$SOLR
 SOLR_DATA=/home/ec2-user/solr-data
-#PROVISION_PROG=wfsToSolr
+PROVISION_PROG=wfsToSolr
 # While testing use a file until we are sure it works and then do it direct off the service
-PROVISION_PROG=wfsFileToSolr
+# PROVISION_PROG=wfsFileToSolr
 
 SOLR_ARCHIVE=$SOLR_HOME.zip
 COMMAND=$DIRECTORY/deploy/install_solr.sh
