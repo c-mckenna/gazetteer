@@ -2,22 +2,33 @@
 export DIRECTORY=gazetteer
 export SOLR_VER=6.3.0
 export SOLR=solr-$SOLR_VER
+export SOLR_ZIP=$SOLR.zip
 export SOLR_HOME=$HOME/$SOLR
 # cd /home/ec2-user
 
 # Download
 cd $HOME
-/usr/bin/wget http://mirror.intergrid.com.au/apache/lucene/solr/$SOLR_VER/$SOLR.zip
-/usr/bin/unzip $SOLR.zip
+
+if [ ! -d $SOLR ]; then
+   if [ ! -f $SOLR_ZIP ]; then
+      /usr/bin/wget http://mirror.intergrid.com.au/apache/lucene/solr/$SOLR_VER/$SOLR.zip
+   fi
+   usr/bin/unzip $SOLR.zip
+fi
 
 # Set up data
 if [ ! -d $DIRECTORY ]; then
-  git clone https://github.com/Tomella/gazetteer.git
+  git clone https://github.com/Tomella/$DIRECTORY.git
+  cd $DIRECTORY
+  npm install
+else
+  cd $DIRECTORY
+  git update
+  npm update
 fi
 
 # Do everything relative to the directory from now on
-cd $DIRECTORY
-sudo cp -rf deploy/placenames $SOLR_HOME/server/solr
+cp -rf deploy/placenames $SOLR_HOME/server/solr
 
 # Set up service and get it running
 sudo cp deploy/solr /etc/init.d
