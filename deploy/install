@@ -12,7 +12,7 @@ PROVISION_PROG=wfsFileToSolr
 
 SOLR_ARCHIVE=$SOLR_HOME.zip
 COMMAND=$DIRECTORY/deploy/install_solr.sh
-INSTALL_SERVICE_COMMAND="gazetteer/deploy/install_solr.sh solr-6.3.0.zip -u ec2-user -i /home/ec2-user/"
+INSTALL_SERVICE_COMMAND="gazetteer/deploy/install_solr.sh solr-6.3.0.zip -u ec2-user -i /home/ec2-user -d /home/ec2-user/solr-data"
 
 
 # Download
@@ -69,11 +69,12 @@ sudo chkconfig --level 345 solr on
 if [ ! -d $SOLR_HOME/server/solr/placenames ]; then
   echo "Copying placenames config to Solr server"
   # Start loading data
-  cp -rf deploy/placenames $SOLR_HOME/server/solr
+  # cp -rf deploy/placenames $SOLR_HOME/server/solr
+  bin/solr create -c placenames -d /home/ec2-user/gazetteer/deploy/placenames/conf
   cd $HOME/$DIRECTORY/source
   node $PROVISION_PROG
   # Not sure if it will pick it up dynamically so try a restart to begin with.
-  sudo service solr restart
+  # sudo service solr restart
 fi
 
 
