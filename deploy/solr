@@ -10,7 +10,7 @@
 # created in the standard location.
 PROG="solr"
 PIDFILE=/var/run/$PROG.pid
-
+. /etc/init.d/functions
 
 start () {
     echo -n "Starting solr..."
