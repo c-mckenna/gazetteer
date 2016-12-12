@@ -11,4 +11,28 @@ What do we assume? Lots of things really as this is the intial go at it.
 
 All up, you should only really need take a copy of the file /deploy/install, make it executable and run it. It works out of your home directory.
 
-There are scripts in the source directory
+There are scripts in the source directory.
+
+To install bootstrap by just copying and pasting this code into a file as the ec2-user, set it executable and run it. After a couple of minutes you should have a running Solr Australian Gazetteer instance running that can be queried.
+```bash
+#!/bin/bash
+
+DIRECTORY=gazetteer
+
+if [ ! -d $DIRECTORY ]; then
+  echo "Fetching gazetteer project"
+  git clone https://github.com/Tomella/$DIRECTORY.git
+else
+  cd $DIRECTORY
+  git pull
+fi
+
+# Download
+cd $HOME/$DIRECTORY/deploy
+chmod +x install
+./install
+
+```
+It sets up proxying against an apache http server that was one of the requirements and the data is then available on http://<your_host_name>/select?indent=on&q=*:*&wt=json
+
+Naturally it would be expected that a client would consume the data.
