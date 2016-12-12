@@ -1,0 +1,38 @@
+#!/bin/bash
+export DIRECTORY=gazetteer
+export SOLR_VER=6.3.0
+export SOLR=solr-$SOLR_VER
+export SOLR_HOME=$HOME/$SOLR
+# cd /home/ec2-user
+
+# Download
+cd $HOME
+/usr/bin/wget http://mirror.intergrid.com.au/apache/lucene/solr/$SOLR_VER/$SOLR.zip
+/usr/bin/unzip $SOLR.zip
+
+# Set up data
+if [ ! -d $DIRECTORY ]; then
+  git clone https://github.com/Tomella/gazetteer.git
+fi
+
+# Do everything relative to the directory from now on
+cd $DIRECTORY
+sudo cp -rf deploy/placenames $SOLR_HOME/server/solr
+
+# Set up service and get it running
+sudo cp deploy/solr /etc/init.d
+sudo chmod +x /etc/init.d/solr
+sudo chkconfig --level 345 solr on
+sudo service solr start
+
+# Set up proxying for select
+sudo cp $DIRECTORY/deploy/gazetteer.conf /etc/httpd/conf.d
+sudo service httpd restart
+
+# Start loading data
+cd source
+node wfsToSolr
+
+cd $HOME
+
+echo 'Installation complete'

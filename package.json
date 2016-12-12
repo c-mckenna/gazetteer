@@ -1,0 +1,19 @@
+{
+  "name": "gazetteer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "request": "^2.79.0",
+    "sax": "^1.2.1",
+    "xml-nodes": "^0.1.5",
+    "xml-objects": "^1.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
