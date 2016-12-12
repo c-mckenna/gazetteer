@@ -37,20 +37,14 @@ else
 fi
 
 # Set up proxying for select if there is an Apache config
-if [ -d /etc/httpd/conf.d ] then
-
+if [ -d /etc/httpd/conf.d ]; then
   if [ ! -f /etc/httpd/conf.d/gazetteer.conf ]; then
-
     echo "Setting up Apache proxy"
     sudo cp $DIRECTORY/deploy/gazetteer.conf /etc/httpd/conf.d
     sudo service httpd restart
-
   fi
-
 else
-
   echo "No Apache installed so bypassing proxying"
-
 fi
 
 # Set up service and get it running
