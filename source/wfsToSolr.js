@@ -1,7 +1,11 @@
 'use strict'
 // stream usage
 // takes the same options as the parser
-const config = require("./config")
+const config = require("./config");
+const prefix = config.prefix;
+const itemTag = config.itemTag;
+const properties = config.properties;
+
 const request = require('request');
 const saxStream = require("sax").createStream(true, {});
 
