@@ -6,31 +6,15 @@ const fs = require('fs');
 const request = require('request');
 const saxStream = require("sax").createStream(true, {});
 
+const config = require("./config");
+const prefix = config.prefix;
+const itemTag = config.itemTag;
+const properties = config.properties;
+
 const RECORDS_PER_WRITE = 500;
 
 const fileLocation = "../data/Gazetteer_of_Australia_Site_1.xml";
 const solrAddEndpoint = "http://localhost:8983/solr/placenames/update?_=${now}&boost=1.0&commitWithin=1000&overwrite=true&wt=json";
-
-const prefix = "Australian_Gazetteer:";
-const itemTag = prefix + "Gazetteer_of_Australia";
-const properties = {};
-
-properties[prefix + "Name"] = "name";
-properties[prefix + "Variant_Name"] = "variant";
-properties[prefix + "OBJECTID"] = "id";
-properties[prefix + "Classification"] = "classification";
-properties[prefix + "Feature_code"] = "featureCode";
-properties[prefix + "Record_ID"] = "recordId";
-properties[prefix + "Latitude"] = {
-   target: "location",
-   type: "point",
-   index: 1
-};
-properties[prefix + "Longitude"] = {
-   target: "location",
-   type: "point",
-   index: 0
-};
 
 let item = featureFactory();
 let count = 1;

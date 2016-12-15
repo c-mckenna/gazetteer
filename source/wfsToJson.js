@@ -5,32 +5,18 @@ const fs = require('fs');
 const request = require('request');
 const saxStream = require("sax").createStream(true, {});
 
+const config = require("./config");
+const prefix = config.prefix;
+const itemTag = config.itemTag;
+const properties = config.properties;
+
 const wfsDataEndpoint = "http://services.ga.gov.au/site_1/services/Australian_Gazetteer/MapServer/WFSServer?service=wfs&version=2.0.0&request=GetFeature&typeNames=Australian_Gazetteer:Gazetteer_of_Australia";
 const outputFile = "../data/Gazetteer_of_Australia.json";
 
-const prefix = "Australian_Gazetteer:";
-const itemTag = prefix + "Gazetteer_of_Australia";
-const latTag = prefix + "Latitude";
-const lngTag = prefix + "Longitude";
 const startObj = '{\n' +
    '   "type": "FeatureCollection",\n' +
    '   "features": [\n';
 const endObj = '\n   ]\n}';
-const properties = {};
-
-properties[prefix + "Name"] = "name";
-properties[prefix + "Variant_Name"] = "variant";
-properties[prefix + "OBJECTID"] = "id";
-properties[prefix + "Classification"] = "class";
-properties[prefix + "Latitude"] = {
-   type: "point",
-   index: 1
-};
-properties[prefix + "Longitude"] = {
-   type: "point",
-   index: 0
-};
-
 
 var stream = fs.createWriteStream(outputFile);
 

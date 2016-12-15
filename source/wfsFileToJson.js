@@ -3,34 +3,16 @@
 // takes the same options as the parser
 const fs = require('fs');
 const saxStream = require("sax").createStream(true, {});
-const prefix = "Gazetteer_of_Australia:";
-const itemTag = prefix + "GazetteerOfAustralia";
-const latTag = prefix + "Latitude";
-const lngTag = prefix + "Longitude";
+
+const config = require("./config");
+const prefix = config.prefix;
+const itemTag = config.itemTag;
+const properties = config.properties;
+
 const startObj = '{\n' +
    '   "type": "FeatureCollection",\n' +
    '   "features": [\n';
 const endObj = '\n   ]\n}';
-
-const properties = {
-};
-
-properties[prefix + "Name"] = "name";
-properties[prefix + "OBJECTID"] = "id";
-properties[prefix + "Classification"] = "class";
-properties[prefix + "Variant_Name"] = "variant";
-//properties[prefix + "Variant_Name"] = {
-//   type: "array",
-//   name: "variants"
-//};
-properties[prefix + "Latitude"] = {
-   type: "point",
-   index: 1
-};
-properties[prefix + "Longitude"] = {
-   type: "point",
-   index: 0
-};
 
 
 var stream = fs.createWriteStream("data/gazetteer.json");
