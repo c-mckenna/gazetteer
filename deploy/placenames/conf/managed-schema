@@ -411,7 +411,7 @@
   <field name="_root_" type="string" docValues="false" indexed="true" stored="false"/>
   <field name="_text_" type="text_reference" multiValued="true" indexed="true" stored="false"/>
   <field name="_version_" type="long" indexed="false" stored="false"/>
-  <field name="authority" type="string" indexed="true" stored="true"/>
+  <field name="authority" multiValued="false" type="string" indexed="true" stored="true"/>
   <field name="class" type="strings"/>
   <field name="classification" type="string" multiValued="false" indexed="true" stored="true"/>
   <field name="featureCode" type="string" indexed="true" required="false" stored="true"/>
