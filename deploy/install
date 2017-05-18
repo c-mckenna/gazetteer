@@ -1,7 +1,7 @@
 #!/bin/bash
 
 DIRECTORY=gazetteer
-SOLR_VER=6.3.0
+SOLR_VER=6.5.1
 SOLR=solr-$SOLR_VER
 SOLR_ZIP=$SOLR.zip
 SOLR_HOME=$HOME/$SOLR
@@ -12,7 +12,7 @@ PROVISION_PROG=wfsToSolr
 
 SOLR_ARCHIVE=$SOLR_HOME.zip
 COMMAND=$DIRECTORY/deploy/install_solr.sh
-INSTALL_SERVICE_COMMAND="gazetteer/deploy/install_solr.sh solr-6.3.0.zip -u ec2-user -i /home/ec2-user -d /home/ec2-user/solr-data"
+INSTALL_SERVICE_COMMAND="gazetteer/deploy/install_solr.sh solr-$SOLR_VER.zip -u ec2-user -i /home/ec2-user -d /home/ec2-user/solr-data"
 
 # Download
 cd $HOME
