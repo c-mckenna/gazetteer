@@ -12,17 +12,11 @@ const itemTag = config.itemTag;
 const properties = config.properties;
 const featureFactory = config.solrFeatureFactory;
 
-const RECORDS_PER_WRITE = 500;
-
 const fileLocation = "../../data/SA_GazFeatureCatalogue.gml";
-const solrAddEndpoint = "http://localhost:8983/solr/placenames/update?_=${now}&boost=1.0&commitWithin=1000&overwrite=true&wt=json";
-
-let item = featureFactory();
-let count = 1;
-let expected;
+const writeLocation = "../../data/gazetteer/sa";
+let expecting = false;
 let readStream;
 let buffer = [];
-
 
 saxStream.on("error", function (e) {
    // unhandled errors will throw, since this is a proper node
