@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "pg": "^7.3.0",
     "fs": "0.0.1-security",
     "request": "^2.79.0",
     "sax": "^1.2.1",
