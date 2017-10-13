@@ -42,6 +42,12 @@ else
   npm update
 fi
 
+# Does the data directory exist?
+if [ ! -d $SOLR_DATA ]; then
+   echo "Making Solr data directory..."
+   mkdir $SOLR
+fi
+
 # Set up proxying for select if there is an Apache config
 if [ -d /etc/httpd/conf.d ]; then
   if [ ! -f /etc/httpd/conf.d/gazetteer.conf ]; then
@@ -62,8 +68,13 @@ if [ ! -f /etc/init.d/solr ]; then
   sudo $INSTALL_SERVICE_COMMAND
 fi
 
+
+
 sudo chkconfig --level 345 solr on
+echo "Starting solr and sleeping..."
+sleep 5s
 sudo service solr restart
+
 
 # Do we need rebuild the data?
 if [ ! -d $SOLR_HOME/server/solr/placenames ]; then
