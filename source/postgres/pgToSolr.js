@@ -85,7 +85,7 @@ function writeBlock(client, pageSize, offset) {
 let block = 0;
 function addToSolr(data) {
    console.log("sending block #" + (++block));
-   console.log(JSON.stringify(data));
+   //console.log(JSON.stringify(data));
    return;
 
    var url = solrAddEndpoint.replace("${now}", Date.now());
