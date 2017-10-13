@@ -12,7 +12,7 @@ const itemTag = config.itemTag;
 const properties = config.properties;
 const featureFactory = config.solrFeatureFactory;
 
-const RECORDS_PER_WRITE = 500;
+const RECORDS_PER_WRITE = 50;
 
 const fileLocation = "../../data/SA_GazFeatureCatalogue.gml";
 const solrAddEndpoint = "http://localhost:8983/solr/placenames/update?_=${now}&boost=1.0&commitWithin=1000&overwrite=true&wt=json";
@@ -56,13 +56,16 @@ saxStream.on("text", function (value) {
       }
    }
 });
-
+var t = 0;
 saxStream.on("closetag", function (name) {
    if (name === itemTag) {
       if (buffer.length >= RECORDS_PER_WRITE) {
          addToSolr(buffer);
          buffer = [];
       }
+t++
+if(t > 100)
+throw new Error("gg")
 
       item.ll = item.location = item.location.join(' ');
       buffer.push(item)
@@ -82,6 +85,9 @@ readStream = fs.createReadStream(fileLocation)
 let block = 0;
 function addToSolr(data) {
    console.log("sending block #" + (++block));
+console.log(JSON.stringify(data));
+return;
+
    var url = solrAddEndpoint.replace("${now}", Date.now());
    var options = {
       method: 'post',
