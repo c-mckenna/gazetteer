@@ -1,7 +1,7 @@
 #!/bin/bash
 
 DIRECTORY=gazetteer
-SOLR_VER=6.5.1
+SOLR_VER=6.6.1
 SOLR=solr-$SOLR_VER
 SOLR_ZIP=$SOLR.zip
 SOLR_HOME=$HOME/$SOLR
