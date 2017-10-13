@@ -5,7 +5,7 @@ SOLR_VER=6.6.1
 SOLR=solr-$SOLR_VER
 SOLR_ZIP=$SOLR.zip
 SOLR_HOME=$HOME/$SOLR
-SOLR_DATA=/home/ec2-user/solr-data
+SOLR_DATA=/home/ec2-user/solr-data/data
 # PROVISION_PROG=wfsToSolr
 PROVISION_PROG=postgres/pgToSolr
 # While testing use a file until we are sure it works and then do it direct off the service
@@ -45,7 +45,7 @@ fi
 # Does the data directory exist?
 if [ ! -d $SOLR_DATA ]; then
    echo "Making Solr data directory..."
-   mkdir $SOLR
+   mkdir -p $SOLR
 fi
 
 # Set up proxying for select if there is an Apache config
