@@ -45,7 +45,7 @@ fi
 # Does the data directory exist?
 if [ ! -d $SOLR_DATA ]; then
    echo "Making Solr data directory..."
-   mkdir -p $SOLR
+   mkdir -p $SOLR_DATA
 fi
 
 # Set up proxying for select if there is an Apache config
