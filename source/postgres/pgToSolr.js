@@ -74,7 +74,7 @@ function writeBlock(client, pageSize, offset) {
                   }
                }
             });
-            item.ll = item.location = item.location.join(' ');
+            record.ll = record.location = record.location.join(' ');
             buffer.push(record);
          });
          addToSolr(buffer);
