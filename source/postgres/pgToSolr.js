@@ -74,6 +74,7 @@ function writeBlock(client, pageSize, offset) {
                   }
                }
             });
+            item.ll = item.location = item.location.join(' ');
             buffer.push(record);
          });
          addToSolr(buffer);
@@ -84,7 +85,9 @@ function writeBlock(client, pageSize, offset) {
 
 let block = 0;
 function addToSolr(data) {
-   console.log("sending block #" + (++block));
+   console.log("sending block #" + (++block), JSON.stringify(data));
+   process.exit();
+   return;
 
    var url = solrAddEndpoint.replace("${now}", Date.now());
    var options = {
