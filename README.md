@@ -41,3 +41,19 @@ Naturally it would be expected that a client would consume the data.
 
 Most of the installation process is conditional so it should be possible to blow parts away and redo it and there is a reasonable chance that it will fill in the gaps.
 If not then that is left as an exercise for the user.
+
+The default is to install from a PostGIS database and to isolate the credentials from this project it is expected that you
+set up environment variables in your .bash_profile file
+```bash
+PLACENAMES_DB_USER=some_postgis_user
+PLACENAMES_DB_HOST=some_host.somewhere.com
+PLACENAMES_DB_DATABASE=some_database
+PLACENAMES_DB_PASSWORD=some_password
+PLACENAMES_DB_PORT=5432
+
+export PLACENAMES_DB_USER
+export PLACENAMES_DB_HOST
+export PLACENAMES_DB_DATABASE
+export PLACENAMES_DB_PASSWORD
+export PLACENAMES_DB_PORT
+```
