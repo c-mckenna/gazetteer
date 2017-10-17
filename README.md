@@ -30,8 +30,7 @@ fi
 
 # Download
 cd $HOME/$DIRECTORY/deploy
-chmod +x install
-./install
+bash install
 ```
 It sets up proxying on an apache http server that was one of the requirements and the data is then available on http://<your_host_name>/select?indent=on&q=*:*&wt=json
 A service is installed and set to autostart on reboot.

@@ -23,4 +23,4 @@ fi
 # Remove data and application
 echo "Remove data and application..."
 cd $HOME
-sudo rm -rf solr $SOLR $SOLR_ZIP solr-data
+sudo rm -rf solr $SOLR solr-data
