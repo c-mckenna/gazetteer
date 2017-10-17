@@ -1,0 +1,26 @@
+#!/bin/bash
+
+DIRECTORY=gazetteer
+SOLR_VER=6.6.1
+SOLR=solr-$SOLR_VER
+SOLR_ZIP=$SOLR.zip
+SOLR_HOME=$HOME/$SOLR
+SOLR_DATA=/home/ec2-user/solr-data/data
+
+
+SOLR_ARCHIVE=$SOLR_HOME.zip
+
+
+# Cleaning up the service
+echo "Starting solr and sleeping..."
+sudo service solr stop
+sleep 5s
+sudo chkconfig --level 345 solr off
+if [ ! -f /etc/init.d/solr ]; then
+   sudo rm -f /etc/init.d/solr
+fi
+
+# Remove data and application
+echo "Remove data and application..."
+cd $HOME
+sudo rm -rf solr $SOLR $SOLR_ZIP solr-data
