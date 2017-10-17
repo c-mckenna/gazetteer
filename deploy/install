@@ -53,6 +53,8 @@ if [ ! -d $SOLR_DATA ]; then
    mkdir -p $SOLR_DATA
 fi
 
+cp -f $DIRECTORY/deploy/solr.xml $SOLR_DATA
+
 # Set up proxying for select if there is an Apache config
 if [ -d /etc/httpd/conf.d ]; then
   if [ ! -f /etc/httpd/conf.d/gazetteer.conf ]; then
