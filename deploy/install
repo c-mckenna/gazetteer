@@ -1,6 +1,7 @@
 #!/bin/bash
 
 DIRECTORY=gazetteer
+SOLR_SANS_VERSION=solr
 SOLR_VER=6.6.1
 SOLR=solr-$SOLR_VER
 SOLR_ZIP=$SOLR.zip
@@ -26,6 +27,10 @@ if [ ! -d $SOLR ]; then
    fi
    echo "Unzipping SOLR"
    /usr/bin/unzip $SOLR.zip
+fi
+
+if [ ! -L $SOLR_SANS_VERSION ]; then
+   ln -s $SOLR $SOLR_SANS_VERSION
 fi
 
 # Set up data
