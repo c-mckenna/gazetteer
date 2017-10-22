@@ -6,6 +6,8 @@ COMMAND=$HOME/$DIRECTORY/source/postgres/pgToSolr.js
 TOUCH=/bin/touch
 TOUCH_DIRECTORY=$HOME/touched
 
+source $HOME/.bash_profile
+
 $NODE $COMMAND
 if [ ! -d $TOUCH_DIRECTORY ]; then
   mkdir $TOUCH_DIRECTORY
