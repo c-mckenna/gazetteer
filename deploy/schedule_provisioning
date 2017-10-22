@@ -1,0 +1,14 @@
+#!/bin/bash
+
+NODE=/usr/bin/node
+DIRECTORY=gazetteer
+COMMAND=$HOME/$DIRECTORY/source/postgres/pgToSolr.js
+TOUCH=/bin/touch
+TOUCH_DIRECTORY=$HOME/touched
+
+$NODE $COMMAND
+if [ ! -d $TOUCH_DIRECTORY ]; then
+  mkdir $TOUCH_DIRECTORY
+fi
+
+$TOUCH $TOUCH_DIRECTORY/lastRun
