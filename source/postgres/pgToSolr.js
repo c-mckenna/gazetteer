@@ -30,7 +30,7 @@ const client = new Client({
 });
 
 let pageSize = config.parameters.pageSize;
-
+let count = 0;
 getWhereClause().then(clause => {
    client.connect((err, client, done) => {
       let offset = 0;
@@ -47,7 +47,7 @@ getWhereClause().then(clause => {
             offset += pageSize;
             writeBlock(client, pageSize, offset).then(writeFinished);
          } else {
-            console.log("finished");
+            console.log("finished writing " + count + " rows");
             process.exit();
          }
       }
@@ -59,6 +59,7 @@ getWhereClause().then(clause => {
                let buffer = [];
 
                rowsLength = res.rows.length;
+               count += rowsLength;
 
                res.rows.forEach(row => {
                   let record = featureFactory();
@@ -86,7 +87,7 @@ getWhereClause().then(clause => {
 
 let block = 0;
 function addToSolr(data) {
-   console.log("sending block #" + (++block));
+   // console.log("sending block #" + (++block));
 
    var url = solrAddEndpoint.replace("${now}", Date.now());
    var options = {
