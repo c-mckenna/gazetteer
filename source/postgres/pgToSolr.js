@@ -2,8 +2,8 @@ const config = require('./config');
 const featureFactory = config.solrFeatureFactory;
 const request = require('request');
 const solrAddEndpoint = "http://localhost:8983/solr/placenames/update?_=${now}&boost=1.0&commitWithin=1000&overwrite=true&wt=json";
-//const solrGetSupplyDate = "http://localhost:8983/solr/placenames/select?q=*:*&rows=1&sort=supplyDate+desc&wt=json";
-const solrGetSupplyDate = "http://placenames.geospeedster.com/select?q=*:*&rows=1&sort=supplyDate+desc&wt=json&fl=supplyDate";
+const solrGetSupplyDate = "http://localhost:8983/solr/placenames/select?q=*:*&rows=1&sort=supplyDate+desc&wt=json";
+//const solrGetSupplyDate = "http://placenames.geospeedster.com/select?q=*:*&rows=1&sort=supplyDate+desc&wt=json&fl=supplyDate";
 
 
 const mappings = config.properties;
@@ -110,7 +110,7 @@ function getLastSupplyDate() {
    return new Promise(function (resolve, reject) {
       request.get(solrGetSupplyDate, function (error, response, body) {
          let data = JSON.parse(body);
-         if (!data.response || !data.response.docs || !data.response.docs.length) {
+         if (!data.response || !data.response.docs || data.response.docs.length === 0) {
             resolve("2000-01-01 00:00:00");
          }
          let date = new Date(JSON.parse(body).response.docs[0].supplyDate);
