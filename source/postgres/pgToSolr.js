@@ -112,11 +112,12 @@ function getLastSupplyDate() {
          let data = JSON.parse(body);
          if (!data.response || !data.response.docs || data.response.docs.length === 0) {
             resolve("2000-01-01 00:00:00");
+         } else {
+            let date = new Date(JSON.parse(body).response.docs[0].supplyDate);
+            // Minus one second
+            date.setSeconds(date.getSeconds() - 1);
+            resolve(pgFormatDate(date));
          }
-         let date = new Date(JSON.parse(body).response.docs[0].supplyDate);
-         // Minus one second
-         date.setSeconds(date.getSeconds() - 1);
-         resolve(pgFormatDate(date));
       });
    });
 }
