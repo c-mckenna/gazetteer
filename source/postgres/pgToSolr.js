@@ -32,7 +32,6 @@ const client = new Client({
 let pageSize = config.parameters.pageSize;
 
 getWhereClause().then(clause => {
-   console.log("Got clause", clause);
    client.connect((err, client, done) => {
       let offset = 0;
       // Handle connection errors
@@ -55,7 +54,6 @@ getWhereClause().then(clause => {
 
       function writeBlock(client, pageSize, offset) {
          let query = 'select * from "PLACENAMES" ' + clause + ' order by "ID" limit ' + pageSize + ' offset ' + offset + ';'
-         console.log(query);
          return client.query(query)
             .then(res => {
                let buffer = [];
