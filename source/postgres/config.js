@@ -17,6 +17,7 @@ properties["LONGITUDE"] = {
    index: 0
 };
 properties["AUTHORITY"] = "authority";
+properties["AUTH_ID"] = "authorityId";
 properties["SUPPLY_DATE"] = "supplyDate";
 
 var solrFeatureFactory = function() {
