@@ -111,7 +111,7 @@ function getLastSupplyDate() {
       request.get(solrGetSupplyDate, function (error, response, body) {
          let data = JSON.parse(body);
          if (!data.response || !data.response.docs || !data.response.docs.length) {
-            return "2000-01-01 00:00:00";
+            resolve("2000-01-01 00:00:00");
          }
          let date = new Date(JSON.parse(body).response.docs[0].supplyDate);
          // Minus one second
