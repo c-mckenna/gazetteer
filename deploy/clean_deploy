@@ -6,6 +6,6 @@ WGET=/usr/bin/wget
 SLEEP=/bin/sleep
 BASH=/bin/bash
 
-$WGET /dev/null -o /dev/null http://localhost:8983/solr/placenames/update?stream.body=%3Cdelete%3E%3Cquery%3E*:*%3C/query%3E%3C/delete%3E&commit=true
+$WGET /dev/null -o /dev/null http://localhost:8983/solr/placenames/update?commit=true&stream.body=%3Cdelete%3E%3Cquery%3E*:*%3C/query%3E%3C/delete%3E
 $SLEEP 1m
 $BASH $HOME/gazetteer/deploy/schedule_provisioning
