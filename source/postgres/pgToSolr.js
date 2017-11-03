@@ -7,9 +7,6 @@ const solrGetSupplyDate = "http://localhost:8983/solr/placenames/select?q=*:*&ro
 
 
 const mappings = mapper.properties;
-const epsg3031 = proj4.defs('EPSG:3031', '+proj=stere +lat_0=-90 +lat_ts=-71 +lon_0=0 +k=1 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs');
-
-console.log(proj4("EPSG:4326", "EPSG:3031", [10, -89]))
 
 process.exitCode = 1;
 throw new Error("Stopping here");
