@@ -8,8 +8,6 @@ const solrGetSupplyDate = "http://localhost:8983/solr/placenames/select?q=*:*&ro
 
 const mappings = mapper.properties;
 
-process.exitCode = 1;
-throw new Error("Stopping here");
 /*
    In the user running the Gazetteer it needs .bash_profile to set the following environment variables:
 
