@@ -1,13 +1,18 @@
-const config = require('./config');
-const featureFactory = config.solrFeatureFactory;
+const mapper = require('./mapper');
+const featureFactory = mapper.solrFeatureFactory;
 const request = require('request');
 const solrAddEndpoint = "http://localhost:8983/solr/placenames/update?_=${now}&boost=1.0&commitWithin=1000&overwrite=true&wt=json";
 const solrGetSupplyDate = "http://localhost:8983/solr/placenames/select?q=*:*&rows=1&sort=supplyDate+desc&wt=json";
 //const solrGetSupplyDate = "http://placenames.geospeedster.com/select?q=*:*&rows=1&sort=supplyDate+desc&wt=json&fl=supplyDate";
 
 
-const mappings = config.properties;
+const mappings = mapper.properties;
+const epsg3031 = proj4.defs('EPSG:3031', '+proj=stere +lat_0=-90 +lat_ts=-71 +lon_0=0 +k=1 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs');
 
+console.log(proj4("EPSG:4326", "EPSG:3031", [10, -89]))
+
+process.exitCode = 1;
+throw new Error("Stopping here");
 /*
    In the user running the Gazetteer it needs .bash_profile to set the following environment variables:
 
@@ -29,7 +34,7 @@ const client = new Client({
    port: process.env.PLACENAMES_DB_PORT,
 });
 
-let pageSize = config.parameters.pageSize;
+let pageSize = mapper.parameters.pageSize;
 let count = 0;
 getWhereClause().then(clause => {
    client.connect((err, client, done) => {
@@ -76,6 +81,8 @@ getWhereClause().then(clause => {
                      }
                   });
                   record.ll = record.location = record.location.join(' ');
+                  mapper.decorateGrid(record);
+
                   buffer.push(record);
                });
                addToSolr(buffer);
