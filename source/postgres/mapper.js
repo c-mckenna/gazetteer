@@ -50,6 +50,7 @@ var parameters = {
 };
 
 module.exports = {
+   decorateGrid,
    properties,
    parameters,
    solrFeatureFactory
