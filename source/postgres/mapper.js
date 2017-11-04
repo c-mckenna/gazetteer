@@ -38,7 +38,7 @@ function decorateGrid(record) {
    let lat = +lngLatStrs[1];
    // We only care about southern points
    if (lat < -50) {
-      let epsg3031 = proj4("EPSG:4326", "EPSG:3031", [+lat, lng]);
+      let epsg3031 = proj4("EPSG:4326", "EPSG:3031", [lng, lat]);
       record.xPolar = epsg3031[0];
       record.yPolar = epsg3031[1];
    }
@@ -46,7 +46,7 @@ function decorateGrid(record) {
 
 
 var parameters = {
-   pageSize: 2000
+   pageSize: 4000
 };
 
 module.exports = {
