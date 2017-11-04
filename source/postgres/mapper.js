@@ -35,7 +35,6 @@ var solrFeatureFactory = function() {
 function decorateGrid(record) {
    let lngLatStrs = record.location.split(" ");
    let lng = +lngLatStrs[0];
-
    // We only care about southern points
    if (lng < -50) {
       let epsg3031 = proj4("EPSG:4326", "EPSG:3031", [+lngLatStrs[1], lng]);
