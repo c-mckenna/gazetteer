@@ -46,7 +46,7 @@ function decorateGrid(record) {
 
 
 var parameters = {
-   pageSize: 500
+   pageSize: 2000
 };
 
 module.exports = {
