@@ -18,6 +18,13 @@ console.log("[45, -80]", proj4("EPSG:4326", "EPSG:3031", [45, -80]))
 console.log("[45, -70]", proj4("EPSG:4326", "EPSG:3031", [45, -70]))
 console.log("[45, -60]", proj4("EPSG:4326", "EPSG:3031", [45, -60]))
 console.log("[45, -50]", proj4("EPSG:4326", "EPSG:3031", [45, -50]))
+console.log("[45, -50]", proj4("EPSG:4326", "EPSG:3031", [45, -50]))
+console.log("[135, -50]", proj4("EPSG:4326", "EPSG:3031", [135, -50]))
 console.log("\n")
-console.log("[-67, 126]", proj4("EPSG:4326", "EPSG:3031", [-67, 126]))
+console.log("[-67, 126]", proj4("EPSG:4326", "EPSG:3031", [-67, 126])) // bad
 console.log("[126, -67]", proj4("EPSG:4326", "EPSG:3031", [126, -67]))
+console.log("\n")
+
+
+console.log("[-69, 110]", proj4("EPSG:4326", "EPSG:3031", [-69, 110]))
+console.log("[-64, 120]", proj4("EPSG:4326", "EPSG:3031", [-64, 120]))
