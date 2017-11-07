@@ -417,6 +417,12 @@
   <field name="_text_" type="text_reference" multiValued="true" indexed="true" stored="false"/>
   <field name="_version_" type="long" indexed="false" stored="false"/>
 
+  <!-- Grouping fields -->
+  <field name="source" multiValued="false" type="string" indexed="true" stored="true" required="true"/>
+  <field name="type" multiValued="false" type="string" indexed="true" stored="true" required="true"/>
+  <field name="subtype" multiValued="false" type="string" indexed="true" stored="true" required="true"/>
+
+
   <!-- Data fields -->
   <field name="bbox" type="bbox" indexed="true" stored="true" />
   <field name="source" type="string" indexed="true" required="true" stored="true"/>
