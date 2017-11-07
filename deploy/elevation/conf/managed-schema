@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Solr managed schema - automatically generated - DO NOT EDIT -->
 <schema name="example-data-driven-schema" version="1.6">
-  <uniqueKey>recordId</uniqueKey>
+  <uniqueKey>composite_id</uniqueKey>
   <fieldType name="ancestor_path" class="solr.TextField">
     <analyzer type="index">
       <tokenizer class="solr.KeywordTokenizerFactory"/>
@@ -410,8 +410,8 @@
   <fieldType name="tlongs" class="solr.TrieLongField" positionIncrementGap="0" docValues="true" multiValued="true" precisionStep="8"/>
 
   <!-- Bounding box fields -->
-  <fieldType numberType="_bbox_coord" units="degrees" geo="true" class="solr.BBoxField" name="bbox"/>
-  <fieldType class="solr.TrieDoubleField" name="_bbox_coord" stored="false" docValues="true" precisionStep="8"/>
+  <fieldType name="bbox" class="solr.BBoxField" geo="true" numberType="_bbox_coord" storeSubFields="false" />
+  <fieldType name="_bbox_coord" class="solr.TrieDoubleField" precisionStep="8" docValues="true" stored="false"/>
 
   <field name="_root_" type="string" docValues="false" indexed="true" stored="false"/>
   <field name="_text_" type="text_reference" multiValued="true" indexed="true" stored="false"/>
@@ -424,14 +424,17 @@
 
 
   <!-- Data fields -->
+  <field name="bbox" type="bbox" indexed="true" stored="true" />
+  <field name="composite_id" type="string" indexed="true" required="true" stored="true"/>
   <field name="index_poly_name" type="string" indexed="true" required="true" stored="true"/>
   <field name="file_name" type="string" multiValued="false" indexed="true" stored="true"/>
   <field name="file_url" type="string" multiValued="false" indexed="true" stored="true"/>
   <field name="file_size" type="tfloat" indexed="true" stored="true"/>
   <field name="file_last_modified" type="date" indexed="true" stored="true"/>
-  <field name="bbox" multiValued="false" stored="true" indexed="true" type="bbox"/>
   <field name="metadata_id" type="string" multiValued="false" indexed="true" required="true" stored="true"/>
 
+  <copyField source="index_poly_name" dest="_text_"/>
+  <copyField source="file_name" dest="_text_"/>
 
   <dynamicField name="*_txt_en_split_tight" type="text_en_splitting_tight" indexed="true" stored="true"/>
   <dynamicField name="*_descendent_path" type="descendent_path" indexed="true" stored="true"/>
@@ -506,6 +509,4 @@
   <dynamicField name="*_d" type="double" indexed="true" stored="true"/>
   <dynamicField name="*_p" type="location" indexed="true" stored="true"/>
   <dynamicField name="*_c" type="currency" indexed="true" stored="true"/>
-  <copyField source="name" dest="_text_"/>
-  <copyField source="variant" dest="_text_"/>
 </schema>
