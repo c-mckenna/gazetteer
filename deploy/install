@@ -55,17 +55,6 @@ fi
 
 cp -f $HOME/$DIRECTORY/deploy/solr.xml $SOLR_DATA
 
-# Set up proxying for select if there is an Apache config
-if [ -d /etc/httpd/conf.d ]; then
-  if [ ! -f /etc/httpd/conf.d/gazetteer.conf ]; then
-    echo "Setting up Apache proxy"
-    sudo cp $HOME/$DIRECTORY/deploy/gazetteer.conf /etc/httpd/conf.d
-    sudo service httpd restart
-  fi
-else
-  echo "No Apache installed so bypassing proxying"
-fi
-
 # Set up service and get it running
 if [ ! -f /etc/init.d/solr ]; then
   echo "Adding the Solr service to init scripts"

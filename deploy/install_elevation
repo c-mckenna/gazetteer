@@ -1,0 +1,35 @@
+#!/bin/bash
+
+DIRECTORY=gazetteer
+SOLR_SANS_VERSION=solr
+SOLR_VER=6.6.1
+SOLR=solr-$SOLR_VER
+SOLR_ZIP=$SOLR.zip
+SOLR_HOME=$HOME/$SOLR
+SOLR_DATA=/home/ec2-user/solr-data/data
+
+echo "For installing only the solr data for elevation"
+
+# Download
+cd $HOME
+
+# Set up data
+echo "Updating gazetteer from git and doing an NPM update..."
+cd $DIRECTORY
+git pull
+npm update
+
+# Do we need rebuild the data?
+if [ ! -d $SOLR_HOME/server/solr/elevation ]; then
+  echo "Copying elevation config to Solr server"
+  # Start loading data
+  # cp -rf deploy/elevation $SOLR_HOME/server/solr
+  cd $SOLR_HOME
+  bin/solr create -c elevation -d /home/ec2-user/gazetteer/deploy/elevation/conf
+  cd $HOME/$DIRECTORY/source
+  node $PROVISION_PROG
+  # Not sure if it will pick it up dynamically so try a restart to begin with.
+  # sudo service solr restart
+fi
+
+echo "Installation complete"
