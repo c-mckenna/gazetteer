@@ -2,7 +2,7 @@ const {Traverser} = require('./traverser');
 const cells = require("./cells").cells;
 
 const request = require('request');
-const solrAddEndpoint = "http://192.168.0.24:8983/solr/elevation/update?_=${now}&boost=1.0&commitWithin=1000&overwrite=true&wt=json";
+const solrAddEndpoint = "http://localhost:8983/solr/elevation/update?_=${now}&boost=1.0&commitWithin=1000&overwrite=true&wt=json";
 
 let template = "https://elvis20161a-ga.fmecloud.com/fmedatastreaming/fsdf_elvis_prod/ReturnDownloadables.fmw?ymin={ymin}&ymax={ymax}&xmin={xmin}&xmax={xmax}"
 
