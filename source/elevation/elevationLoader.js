@@ -2,11 +2,13 @@ const {Traverser} = require('./traverser');
 const cells = require("./cells").cells;
 
 const request = require('request');
-const solrAddEndpoint = "http://localhost:8983/solr/elevation/update?_=${now}&boost=1.0&commitWithin=1000&overwrite=true&wt=json";
+const solrAddEndpoint = "http://192.168.0.24:8983/solr/elevation/update?_=${now}&boost=1.0&commitWithin=1000&overwrite=true&wt=json";
 
 let template = "https://elvis20161a-ga.fmecloud.com/fmedatastreaming/fsdf_elvis_prod/ReturnDownloadables.fmw?ymin={ymin}&ymax={ymax}&xmin={xmin}&xmax={xmax}"
 
 console.log("Due to process " + cells.length);
+
+let keys = {};
 
 let index = 0;
 
@@ -36,7 +38,11 @@ function getBlock(cell) {
          console.log(data);
          try {
             let traverser = new Traverser(data);
-            resolve(traverser.getFlattened());
+            resolve(traverser.getFlattened().filter(item => {
+               var itsNew = !keys[item.composite_id];
+               keys[item.composite_id] = true;
+               return itsNew;
+            }));
          } catch(e) {
             console.log("e", e);
             reject(e);
