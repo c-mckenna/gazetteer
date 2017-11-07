@@ -1,3 +1,5 @@
+// At this point in time this is redundant. Now data is loaded from the new repositories in NLIG Postgis tables.
+// Leaving it here as an example.
 
 const prefix = "fme:";
 const itemTag = prefix + "Gazetteer";

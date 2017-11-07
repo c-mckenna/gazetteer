@@ -1,4 +1,7 @@
 'use strict'
+// At this point in time this is redundant. Now data is loaded from the new repositories in NLIG Postgis tables.
+// Leaving it here as an example.
+
 // stream usage
 // takes the same options as the parser
 const config = require("./config");
