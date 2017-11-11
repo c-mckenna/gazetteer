@@ -409,19 +409,21 @@
   <fieldType name="tlong" class="solr.TrieLongField" positionIncrementGap="0" docValues="true" precisionStep="8"/>
   <fieldType name="tlongs" class="solr.TrieLongField" positionIncrementGap="0" docValues="true" multiValued="true" precisionStep="8"/>
 
-  <!-- Bounding box fields -->
+
 
   <field name="_root_" type="string" docValues="false" indexed="true" stored="false"/>
   <field name="_text_" type="text_reference" multiValued="true" indexed="true" stored="false"/>
   <field name="_version_" type="long" indexed="false" stored="false"/>
+
+  <!-- Bounding box fields -->
+  <fieldType name="bbox" class="solr.BBoxField" geo="true" numberType="_bbox_coord" storeSubFields="false" />
+  <fieldType name="_bbox_coord" class="solr.TrieDoubleField" precisionStep="8" docValues="true" stored="false"/>
 
   <!-- Data fields -->
   <field name="bbox" type="bbox" indexed="true" stored="true" />
   <field name="source" type="string" indexed="true" required="true" stored="true"/>
   <field name="type" type="string" indexed="true" required="true" stored="true"/>
   <field name="subType" type="string" indexed="true" required="true" stored="true"/>
-  <fieldType name="bbox" class="solr.BBoxField" geo="true" numberType="_bbox_coord" storeSubFields="false" />
-  <fieldType name="_bbox_coord" class="solr.TrieDoubleField" precisionStep="8" docValues="true" stored="false"/>
   <field name="composite_id" type="string" indexed="true" required="true" stored="true"/>
   <field name="index_poly_name" type="string" indexed="true" required="false" stored="true"/>
   <field name="file_name" type="string" multiValued="false" indexed="true" stored="true"/>
