@@ -4,6 +4,8 @@ const cells = require("./cells").cells;
 const request = require('request');
 const solrAddEndpoint = "http://localhost:8983/solr/elevation/update?_=${now}&boost=1.0&commitWithin=1000&overwrite=true&wt=json";
 
+let products = require("./products");
+
 let template = "https://elvis20161a-ga.fmecloud.com/fmedatastreaming/fsdf_elvis_prod/ReturnDownloadables.fmw?ymin={ymin}&ymax={ymax}&xmin={xmin}&xmax={xmax}"
 
 console.log("Due to process " + cells.length);
@@ -11,8 +13,9 @@ console.log("Due to process " + cells.length);
 let keys = {};
 
 let index = 0;
-
-getBlock(cells[index++]).then(processBlock);
+addToSolr(products).then(() => {
+   getBlock(cells[index++]).then(processBlock);
+});
 
 function processBlock(response) {
    addToSolr(response).then(status => {
