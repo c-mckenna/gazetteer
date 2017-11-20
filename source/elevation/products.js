@@ -8,6 +8,7 @@ exports = module.exports = [
       file_url: null,
       file_last_modified: new Date("1999-12-31"),
       metadata_id: "aac46307-fce8-449d-e044-00144fdd4fa6",
+      metadata_url: "https://ecat.ga.gov.au/geonetwork/srv/eng/search#!aac46307-fce8-449d-e044-00144fdd4fa6",
       composite_id: "Geoscience Australia-aac46307-fce8-449d-e044-00144fdd4fa6"
    },
    {
@@ -19,6 +20,7 @@ exports = module.exports = [
       file_url: null,
       file_last_modified: new Date("1999-12-31"),
       metadata_id: "a05f7893-0050-7506-e044-00144fdd4fa6",
+      metadata_url: "https://ecat.ga.gov.au/geonetwork/srv/eng/search#!a05f7893-0050-7506-e044-00144fdd4fa6",
       composite_id: "Geoscience Australia-a05f7893-0050-7506-e044-00144fdd4fa6"
    },
    {
@@ -30,6 +32,7 @@ exports = module.exports = [
       file_url: null,
       file_last_modified: new Date("1999-12-31"),
       metadata_id: "22be4b55-2465-4320-e053-10a3070a5236",
+      metadata_url: "https://ecat.ga.gov.au/geonetwork/srv/eng/search#!22be4b55-2465-4320-e053-10a3070a5236",
       composite_id: "Geoscience Australia-22be4b55-2465-4320-e053-10a3070a5236"
    },
    {
@@ -41,6 +44,7 @@ exports = module.exports = [
       file_url: null,
       file_last_modified: new Date("1999-12-31"),
       metadata_id: "22be4b55-2485-4320-e053-10a3070a5236",
+      metadata_url: "https://ecat.ga.gov.au/geonetwork/srv/eng/search#!22be4b55-2485-4320-e053-10a3070a5236",
       composite_id: "Geoscience Australia-22be4b55-2485-4320-e053-10a3070a5236"
    },
 ];

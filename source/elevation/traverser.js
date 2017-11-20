@@ -108,6 +108,7 @@ class Item {
       file_size
       file_last_modified
       metadata_id
+      metadata_url
    */
    getFlattened() {
       let response = {
@@ -117,7 +118,8 @@ class Item {
          subType: this.parent.name,
          file_name: this.file_name,
          file_url: this.file_url,
-         metadata_id: this.metadata_id
+         metadata_id: this.metadata_id,
+         metadata_url: this.metadata_url
       };
       if (this.file_last_modified) {
          response.file_last_modified = new Date(this.file_last_modified.substr(0, 4) + "-" +
