@@ -28,7 +28,7 @@ exports.arrayToMap = function (arr) {
 };
 
 // You get back a function after giving the factory an endpoint.
-exports.writer = function (solrAddEndpoint) {
+exports.writer = function (request, solrAddEndpoint) {
    return function (data) {
       var url = solrAddEndpoint.replace("${now}", Date.now());
       var options = {

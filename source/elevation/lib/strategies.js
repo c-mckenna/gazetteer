@@ -38,7 +38,7 @@ class Extent {
    toWkt() {
       if (this.south !== "") {
          // ENVELOPE(147.317470505607, 147.338568716996, -31.9414868296578,-31.9595849666431)
-         return "ENVELOPE(" + this.east + ", " + this.west + ", " + this.north + ", " + this.south + ")";
+         return "ENVELOPE(" + this.west + ", " + this.east + ", " + this.north + ", " + this.south + ")";
       }
       return "";
    }
@@ -78,6 +78,9 @@ class BaseStrategy {
       var abstractNode = node;
 
       var bbox = new Extent(node.extent);
+      if(bbox.toWkt()) {
+         data.bbox = bbox.toWkt();
+      }
 
       node = node &&
          node.citation &&

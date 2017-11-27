@@ -5,7 +5,7 @@ var config = require("./metadataconfig").config;
 
 var loader = new strat.Strategies(config.baseUrl);
 
-var solrWriter = solrHelper.writer("http://localhost:8983/solr/metadata/update?_=${now}&boost=1.0&commitWithin=1000&overwrite=true&wt=json");
+var solrWriter = solrHelper.writer(request, "http://192.168.0.24:8983/solr/metadata/update?_=${now}&boost=1.0&commitWithin=1000&overwrite=true&wt=json");
 
 // Used to page through metadata_id
 var count = 0;
@@ -59,7 +59,9 @@ function loadRecord(record) {
       console.log(metadata)
       writeRecord.abstract = metadata.abstract;
       writeRecord.title = metadata.title;
-      //solrWriter([writeRecord]);
+      writeRecord.bbox = metadata.bbox;
+      writeRecord.composite_id = writeRecord.source + "_" + writeRecord.metadata_id;
+      solrWriter([writeRecord]);
    });
 }
 
