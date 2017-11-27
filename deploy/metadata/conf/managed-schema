@@ -423,8 +423,8 @@
   <field name="bbox" type="bbox" indexed="true" stored="true" />
   <field name="source" type="string" indexed="true" required="true" stored="true"/>
   <field name="composite_id" type="string" indexed="true" required="true" stored="true"/>
-  <field name="abstract" type="text" multiValued="false" indexed="true" stored="true"/>
-  <field name="title" type="text" multiValued="false" indexed="true" stored="true"/>
+  <field name="abstract" type="string" multiValued="false" indexed="true" stored="true"/>
+  <field name="title" type="string" multiValued="false" indexed="true" stored="true"/>
   <field name="metadata_id" type="string" multiValued="false" indexed="true" required="false" stored="true"/>
   <field name="metadata_url" type="string" multiValued="false" indexed="true" required="false" stored="true"/>
 
