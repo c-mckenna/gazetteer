@@ -57,7 +57,7 @@ function loadRecord(record) {
 
    let strategy = loader.strategy(record.source);
    strategy.requestMetadata(record).then(metadata => {
-      console.log(metadata)
+      console.log(metadata.metadata_id);
       writeRecord.abstract = metadata.abstract;
       writeRecord.title = metadata.title;
       writeRecord.bbox = metadata.bbox;
