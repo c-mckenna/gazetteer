@@ -29,9 +29,9 @@ if [ ! -d $SOLR ]; then
    /usr/bin/unzip $SOLR.zip
 fi
 
-if [ ! -L $SOLR_SANS_VERSION ]; then
-   ln -s $SOLR $SOLR_SANS_VERSION
-fi
+# if [ ! -L $SOLR_SANS_VERSION ]; then
+#   ln -s $SOLR $SOLR_SANS_VERSION
+# fi
 
 # Set up data
 if [ ! -d $DIRECTORY ]; then
