@@ -2,11 +2,11 @@
 
 DIRECTORY=gazetteer
 SOLR_SANS_VERSION=solr
-SOLR_VER=6.6.1
+SOLR_VER=8.5.1
 SOLR=solr-$SOLR_VER
 SOLR_ZIP=$SOLR.zip
 SOLR_HOME=$HOME/$SOLR
-SOLR_DATA=/home/ec2-user/solr-data/data
+SOLR_DATA=$HOME/solr-data/data
 # PROVISION_PROG=wfsToSolr
 PROVISION_PROG=postgres/pgToSolr
 # While testing use a file until we are sure it works and then do it direct off the service
@@ -14,7 +14,7 @@ PROVISION_PROG=postgres/pgToSolr
 
 SOLR_ARCHIVE=$SOLR_HOME.zip
 COMMAND=$DIRECTORY/deploy/install_solr.sh
-INSTALL_SERVICE_COMMAND="gazetteer/deploy/install_solr.sh solr-$SOLR_VER.zip -u ec2-user -i /home/ec2-user -d /home/ec2-user/solr-data"
+INSTALL_SERVICE_COMMAND="gazetteer/deploy/install_solr.sh solr-$SOLR_VER.zip -u $LOGNAME -i $HOME -d $HOME/solr-data"
 
 # Download
 cd $HOME
@@ -75,7 +75,7 @@ if [ ! -d $SOLR_HOME/server/solr/placenames ]; then
   # Start loading data
   # cp -rf deploy/placenames $SOLR_HOME/server/solr
   cd $SOLR_HOME
-  bin/solr create -c placenames -d /home/ec2-user/gazetteer/deploy/placenames/conf
+  bin/solr create -c placenames -d $HOME/gazetteer/deploy/placenames/conf
   cd $HOME/$DIRECTORY/source
   node $PROVISION_PROG
   # Not sure if it will pick it up dynamically so try a restart to begin with.
