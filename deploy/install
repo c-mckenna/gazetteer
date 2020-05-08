@@ -29,6 +29,8 @@ if [ ! -d $SOLR ]; then
    /usr/bin/unzip $SOLR.zip
 fi
 
+# In the upgrade to 8.5.1 this step is done by Solr and they even complain if you do it.
+# Will delete some time in the future.
 # if [ ! -L $SOLR_SANS_VERSION ]; then
 #   ln -s $SOLR $SOLR_SANS_VERSION
 # fi
