@@ -44,16 +44,15 @@ If not then that is left as an exercise for the user.
 The default is to install from a PostGIS database and to isolate the credentials from this project it is expected that NLIG have 
 pre-configured the EC2 instance with [secrets manager](https://docs.aws.amazon.com/secretsmanager/latest/apireference/API_GetSecretValue.html) as we use the variables to retrieve the Postgres credentials and other details.
  
-```bash
-PLACENAMES_DB_USER=some_postgis_user
-PLACENAMES_DB_HOST=some_host.somewhere.com
-PLACENAMES_DB_DATABASE=some_database
-PLACENAMES_DB_PASSWORD=some_password
-PLACENAMES_DB_PORT=5432
+We need the following details to read the PostGIS database:
 
-export PLACENAMES_DB_USER
-export PLACENAMES_DB_HOST
-export PLACENAMES_DB_DATABASE
-export PLACENAMES_DB_PASSWORD
-export PLACENAMES_DB_PORT
+```json
+{
+	"username":"<A_USER_NAME>",
+	"password":"<A_PASSWORD>",
+	"engine":"postgres",
+	"host":"<A_HOST_NAME>",
+	"port":5432,
+	"dbname":"<THE_DB_NAME>"
+}
 ```
