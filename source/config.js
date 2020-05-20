@@ -21,8 +21,14 @@ properties[prefix + "Longitude"] = {
    index: 0
 };
 
+let awsSecrets = {   
+   region: "ap-southeast-2",
+   secretName: "fsdf/placenames/postgresql",
+}
+
 module.exports = {
    properties,
    prefix,
-   itemTag
+   itemTag,
+   awsSecrets
 };

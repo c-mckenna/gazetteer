@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "aws-sdk": "^2.673.0",
     "fs": "0.0.1-security",
     "pg": "^7.3.0",
     "proj4": "^2.4.4",

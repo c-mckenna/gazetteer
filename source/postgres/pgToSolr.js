@@ -4,7 +4,8 @@ const request = require('request');
 const solrAddEndpoint = "http://localhost:8983/solr/placenames/update?_=${now}&boost=1.0&commitWithin=1000&overwrite=true&wt=json";
 const solrGetSupplyDate = "http://localhost:8983/solr/placenames/select?q=*:*&rows=1&sort=supplyDate+desc&wt=json";
 //const solrGetSupplyDate = "http://placenames.geospeedster.com/select?q=*:*&rows=1&sort=supplyDate+desc&wt=json&fl=supplyDate";
-
+const config = require("../config.js")
+const awsSecrets = require("../lib/awsSecrets");
 
 const mappings = mapper.properties;
 
@@ -19,19 +20,23 @@ const mappings = mapper.properties;
 
 */
 
-const { Client } = require('pg');
+async function bootstrap() {
+   const { Client } = require('pg');
 
-const client = new Client({
-   user: process.env.PLACENAMES_DB_USER,
-   host: process.env.PLACENAMES_DB_HOST,
-   database: process.env.PLACENAMES_DB_DATABASE,
-   password: process.env.PLACENAMES_DB_PASSWORD,
-   port: process.env.PLACENAMES_DB_PORT,
-});
+   const parameters = await awsSecrets(config.awsSecrets);
 
-let pageSize = mapper.parameters.pageSize;
-let count = 0;
-getWhereClause().then(clause => {
+   const client = new Client({
+      user: parameters.username,
+      host: parameters.host,
+      database: parameters.dbname,
+      password: parameters.password,
+      port: parameters.port,
+   });
+
+   let pageSize = mapper.parameters.pageSize;
+   let count = 0;
+   let clause = await getWhereClause();
+
    client.connect((err, client, done) => {
       let offset = 0;
       // Handle connection errors
@@ -85,12 +90,9 @@ getWhereClause().then(clause => {
             });
       }
    });
-});
+}
 
-let block = 0;
 function addToSolr(data) {
-   // console.log("sending block #" + (++block));
-
    var url = solrAddEndpoint.replace("${now}", Date.now());
    var options = {
       method: 'post',
@@ -101,12 +103,17 @@ function addToSolr(data) {
    request.post(options);
 }
 
-function getWhereClause() {
+async function getWhereClause() {
    console.log("Calling last supply date");
-   return getLastSupplyDate().then(date => ' where "SUPPLY_DATE" > \'' + date + "'").catch(() => "");
+   try {
+      let date = await getLastSupplyDate();   
+      return ' where "SUPPLY_DATE" > \'' + date + "'";
+   } catch(e) {
+      return "";
+   }
 }
 
-function getLastSupplyDate() {
+async function getLastSupplyDate() {
    console.log("Getting last supply date");
    return new Promise(function (resolve, reject) {
       request.get(solrGetSupplyDate, function (error, response, body) {
