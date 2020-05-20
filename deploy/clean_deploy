@@ -2,10 +2,11 @@
 
 source $HOME/.bash_profile
 
-WGET=/usr/bin/wget
+CURL=/usr/bin/curl
 SLEEP=/bin/sleep
 BASH=/bin/bash
 
-$WGET -O /dev/null -o /dev/null "http://localhost:8983/solr/placenames/update?commit=true&stream.body=%3Cdelete%3E%3Cquery%3E*:*%3C/query%3E%3C/delete%3E"
+$CURL -s http://localhost:8983/solr/placenames/update --data '<delete><query>*:*</query></delete>' -H 'Content-type:text/xml; charset=utf-8' > /dev/null
+$CURL -s http://localhost:8983/solr/placenames/update --data '<commit/>' -H 'Content-type:text/xml; charset=utf-8' > /dev/null
 $SLEEP 1m
 $BASH $HOME/gazetteer/deploy/schedule_provisioning
