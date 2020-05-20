@@ -3,22 +3,22 @@ const featureFactory = mapper.solrFeatureFactory;
 const request = require('request');
 const solrAddEndpoint = "http://localhost:8983/solr/placenames/update?_=${now}&boost=1.0&commitWithin=1000&overwrite=true&wt=json";
 const solrGetSupplyDate = "http://localhost:8983/solr/placenames/select?q=*:*&rows=1&sort=supplyDate+desc&wt=json";
-//const solrGetSupplyDate = "http://placenames.geospeedster.com/select?q=*:*&rows=1&sort=supplyDate+desc&wt=json&fl=supplyDate";
 const config = require("../config.js")
 const awsSecrets = require("../lib/awsSecrets");
 
 const mappings = mapper.properties;
 
-/*
-   In the user running the Gazetteer it needs .bash_profile to set the following environment variables:
+// Start of run
+console.log("Starting read of postGis");
+bootstrap().then(response => {
+   console.log("Finit");
+   process.exit();
+}).catch(err => {
+   console.log(err);
+   process.exit();
+});
 
-   export PLACENAMES_DB_USER
-   export PLACENAMES_DB_HOST
-   export PLACENAMES_DB_DATABASE
-   export PLACENAMES_DB_PASSWORD
-   export PLACENAMES_DB_PORT
-
-*/
+// End of run
 
 async function bootstrap() {
    const { Client } = require('pg');
@@ -37,58 +37,66 @@ async function bootstrap() {
    let count = 0;
    let clause = await getWhereClause();
 
-   client.connect((err, client, done) => {
-      let offset = 0;
-      // Handle connection errors
-      if (err) {
-         console.log(err);
-         return;
-      }
 
-      writeBlock(client, pageSize, offset).then(writeFinished);
+   return new Promise((resolve, reject) => {
 
-      function writeFinished(written) {
-         if (written) {
-            offset += pageSize;
-            writeBlock(client, pageSize, offset).then(writeFinished);
-         } else {
-            console.log("finished writing " + count + " rows");
-            process.exit();
+      client.connect((err, client, done) => {
+         let offset = 0;
+         // Handle connection errors
+         if (err) {
+            console.log(err);
+            return;
          }
-      }
 
-      function writeBlock(client, pageSize, offset) {
-         let query = 'select * from "PLACENAMES" ' + clause + ' order by "ID" limit ' + pageSize + ' offset ' + offset + ';'
-         return client.query(query)
-            .then(res => {
-               let buffer = [];
+         writeBlock(client, pageSize, offset).then(writeFinished);
 
-               rowsLength = res.rows.length;
-               count += rowsLength;
+         function writeFinished(written) {
+            try {
+               if (written) {
+                  offset += pageSize;
+                  writeBlock(client, pageSize, offset).then(writeFinished);
+               } else {
+                  console.log("finished writing " + count + " rows");
+                  resolve("Finished writing");
+               }
+            } catch (e) {
+               reject(e);
+            }
+         }
 
-               res.rows.forEach(row => {
-                  let record = featureFactory();
-                  Object.keys(row).forEach(key => {
-                     let expected = mappings[key];
-                     let value = row[key];
+         function writeBlock(client, pageSize, offset) {
+            let query = 'select * from "PLACENAMES" ' + clause + ' order by "ID" limit ' + pageSize + ' offset ' + offset + ';'
+            return client.query(query)
+               .then(res => {
+                  let buffer = [];
 
-                     if (typeof expected === "string") {
-                        record[expected] = value;
-                     } else if (typeof expected === "object") {
-                        if (expected.type === "point") {
-                           record[expected.target][expected.index] = +value;
+                  rowsLength = res.rows.length;
+                  count += rowsLength;
+
+                  res.rows.forEach(row => {
+                     let record = featureFactory();
+                     Object.keys(row).forEach(key => {
+                        let expected = mappings[key];
+                        let value = row[key];
+
+                        if (typeof expected === "string") {
+                           record[expected] = value;
+                        } else if (typeof expected === "object") {
+                           if (expected.type === "point") {
+                              record[expected.target][expected.index] = +value;
+                           }
                         }
-                     }
-                  });
-                  record.ll = record.location = record.location.join(' ');
-                  mapper.decorateGrid(record);
+                     });
+                     record.ll = record.location = record.location.join(' ');
+                     mapper.decorateGrid(record);
 
-                  buffer.push(record);
+                     buffer.push(record);
+                  });
+                  addToSolr(buffer);
+                  return rowsLength;
                });
-               addToSolr(buffer);
-               return rowsLength;
-            });
-      }
+         }
+      });
    });
 }
 
@@ -106,9 +114,9 @@ function addToSolr(data) {
 async function getWhereClause() {
    console.log("Calling last supply date");
    try {
-      let date = await getLastSupplyDate();   
+      let date = await getLastSupplyDate();
       return ' where "SUPPLY_DATE" > \'' + date + "'";
-   } catch(e) {
+   } catch (e) {
       return "";
    }
 }
