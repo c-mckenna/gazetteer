@@ -23,7 +23,7 @@ properties[prefix + "Longitude"] = {
 
 let awsSecrets = {   
    region: "ap-southeast-2",
-   secretName: "fsdf/placenames/postgresql",
+   secretName: "fsdf/placenames/postgresql/readonly",
 }
 
 module.exports = {
