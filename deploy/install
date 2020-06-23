@@ -2,7 +2,7 @@
 
 DIRECTORY=gazetteer
 SOLR_SANS_VERSION=solr
-SOLR_VER=8.5.1
+SOLR_VER=8.5.2
 SOLR=solr-$SOLR_VER
 SOLR_ZIP=$SOLR.zip
 SOLR_HOME=$HOME/$SOLR
@@ -29,7 +29,7 @@ if [ ! -d $SOLR ]; then
    /usr/bin/unzip $SOLR.zip
 fi
 
-# In the upgrade to 8.5.1 this step is done by Solr and they even complain if you do it.
+# In the upgrade to 8.5.2 this step is done by Solr and they even complain if you do it.
 # Will delete some time in the future.
 # if [ ! -L $SOLR_SANS_VERSION ]; then
 #   ln -s $SOLR $SOLR_SANS_VERSION
