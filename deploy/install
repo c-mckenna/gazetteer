@@ -23,7 +23,8 @@ if [ ! -d $SOLR ]; then
    echo "No SOLR installed"
    if [ ! -f $SOLR_ZIP ]; then
       echo "Fetching SOLR zip..."
-      /usr/bin/wget http://mirror.intergrid.com.au/apache/lucene/solr/$SOLR_VER/$SOLR.zip
+      # /usr/bin/wget http://mirror.intergrid.com.au/apache/lucene/solr/$SOLR_VER/$SOLR.zip
+      /usr/bin/wget https://archive.apache.org/dist/lucene/solr/$SOLR_VER/$SOLR.zip 
    fi
    echo "Unzipping SOLR"
    /usr/bin/unzip $SOLR.zip
