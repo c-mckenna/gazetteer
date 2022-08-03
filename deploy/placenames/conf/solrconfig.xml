@@ -747,6 +747,16 @@
         </lst>
     </requestHandler>
 
+    <requestHandler name="/ping" class="solr.PingRequestHandler">
+        <lst name="invariants">
+            <str name="qt">/select</str>
+            <str name="q">*.*</str>
+            <str name="rows">1</str>
+            <str name="sort">supplyDate desc</str>
+            <str name="wt">json</str>
+        </lst>
+    </requestHandler>
+
     <!-- Shared parameters for multiple Request Handlers -->
     <initParams path="/update/**,/query,/select,/spell">
         <lst name="defaults">
