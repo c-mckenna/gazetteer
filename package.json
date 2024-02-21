@@ -4,14 +4,11 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "aws-sdk": "^2.673.0",
-    "fs": "0.0.1-security",
+    "aws-sdk": "^2.1560.0",
     "pg": "^8.7.3",
     "proj4": "^2.4.4",
     "request": "^2.79.0",
-    "sax": "^1.2.1",
-    "xml-nodes": "^0.1.5",
-    "xml-objects": "^1.0.1"
+    "sax": "^1.2.1"
   },
   "devDependencies": {},
   "scripts": {
